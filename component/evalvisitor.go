@@ -5,6 +5,7 @@ import (
 	"math"
 	"reflect"
 	"strconv"
+	"strings"
 	"tiny-language-antlr4-llvm-ir/parser"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -125,7 +126,13 @@ func (e *EvalVisitor) VisitExpressionExpression(ctx *parser.ExpressionExpression
 }
 
 func (e *EvalVisitor) add(left *TLValue, right *TLValue) interface{} {
-	return &TLValue{left.asDouble() + right.asDouble()}
+	if left.isDouble() && right.isDouble() {
+		return &TLValue{left.asDouble() + right.asDouble()}
+	}
+	if left.isString() && right.isString() {
+		return &TLValue{left.asString() + right.asString()}
+	}
+	return nil
 }
 
 func (e *EvalVisitor) sub(left *TLValue, right *TLValue) interface{} {
@@ -133,7 +140,18 @@ func (e *EvalVisitor) sub(left *TLValue, right *TLValue) interface{} {
 }
 
 func (e *EvalVisitor) mult(left *TLValue, right *TLValue) interface{} {
-	return &TLValue{left.asDouble() * right.asDouble()}
+	if left.isDouble() && right.isDouble() {
+		return &TLValue{left.asDouble() * right.asDouble()}
+	}
+	if left.isString() && right.isDouble() {
+		times := int(right.asDouble())
+		sb := strings.Builder{}
+		for i := 0; i < times; i++ {
+			sb.WriteString(left.asString())
+		}
+		return &TLValue{sb.String()}
+	}
+	return nil
 }
 
 func (e *EvalVisitor) div(left *TLValue, right *TLValue) interface{} {
@@ -182,6 +200,13 @@ func (e *EvalVisitor) VisitIdentifierExpression(ctx *parser.IdentifierExpression
 	val := e.scope.resolve(id)
 	return val
 }
+
+func (e *EvalVisitor) VisitStringExpression(ctx *parser.StringExpressionContext) interface{} {
+	text := ctx.GetText()
+	text = text[1:len(text) - 1]
+	return &TLValue{text}
+}
+
 
 func (e *EvalVisitor) VisitFunctionCallExpression(ctx *parser.FunctionCallExpressionContext) interface{} {
 	fmt.Printf("Enter VisitFunctionCallExpression\n")

@@ -33,6 +33,7 @@ expression:
 	| Number												# numberExpression
 	| functionCall								# functionCallExpression
 	| Identifier									# identifierExpression
+	| StringLiteral                                 #stringExpression
 	| '(' expression ')'							# expressionExpression
     ;
 

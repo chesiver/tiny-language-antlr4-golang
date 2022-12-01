@@ -48,6 +48,10 @@ func (v *BaseTinyLanguageVisitor) VisitPowerExpression(ctx *PowerExpressionConte
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTinyLanguageVisitor) VisitStringExpression(ctx *StringExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTinyLanguageVisitor) VisitExpressionExpression(ctx *ExpressionExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
