@@ -23,6 +23,9 @@ type TinyLanguageVisitor interface {
 	// Visit a parse tree produced by TinyLanguageParser#printlnFunctionCall.
 	VisitPrintlnFunctionCall(ctx *PrintlnFunctionCallContext) interface{}
 
+	// Visit a parse tree produced by TinyLanguageParser#powerExpression.
+	VisitPowerExpression(ctx *PowerExpressionContext) interface{}
+
 	// Visit a parse tree produced by TinyLanguageParser#expressionExpression.
 	VisitExpressionExpression(ctx *ExpressionExpressionContext) interface{}
 

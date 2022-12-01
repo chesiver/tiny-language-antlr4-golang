@@ -26,8 +26,8 @@ functionCall:
 
 expression:
 	// '-' expression											# unaryMinusExpression
-	// | <assoc = right> expression '^' expression				# powerExpression
-	expression op = ('*' | '/' | '%') expression			# multExpression
+	<assoc = right> expression '^' expression				# powerExpression
+	| expression op = ('*' | '/' | '%') expression			# multExpression
 	| expression op = ('+' | '-') expression				# addExpression
 	| Number												# numberExpression
 	| functionCall								# functionCallExpression
@@ -63,6 +63,7 @@ fragment Int: [1-9] Digit*
 fragment Digit: [0-9]
     ;
 
+Power 	: '^';
 Add      : '+';
 Subtract : '-';
 Mult    : '*';

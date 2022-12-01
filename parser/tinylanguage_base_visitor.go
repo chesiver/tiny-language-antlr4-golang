@@ -28,6 +28,10 @@ func (v *BaseTinyLanguageVisitor) VisitPrintlnFunctionCall(ctx *PrintlnFunctionC
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTinyLanguageVisitor) VisitPowerExpression(ctx *PowerExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTinyLanguageVisitor) VisitExpressionExpression(ctx *ExpressionExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }

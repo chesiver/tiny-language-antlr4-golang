@@ -2,6 +2,7 @@ package component
 
 import (
 	"fmt"
+	"math"
 	"reflect"
 	"strconv"
 	"tiny-language-antlr4-llvm-ir/parser"
@@ -150,6 +151,12 @@ func (e *EvalVisitor) VisitMultExpression(ctx *parser.MultExpressionContext) int
 	default:
 		return nil
 	}
+}
+
+func (e *EvalVisitor) VisitPowerExpression(ctx *parser.PowerExpressionContext) interface{} {
+	left := e.Visit(ctx.Expression(0)).(*TLValue)
+	right := e.Visit(ctx.Expression(1)).(*TLValue)
+	return &TLValue{math.Pow(left.asDouble(), right.asDouble())}
 }
 
 func (e *EvalVisitor) VisitNumberExpression(ctx *parser.NumberExpressionContext) interface{} {
