@@ -54,7 +54,7 @@ func (e *EvalVisitor) VisitBlock(ctx *parser.BlockContext) interface{} {
 	// if fctx := ctx.FunctionDecl(0); fctx != nil {
 	// 	e.Visit(fctx)
 	// }
-	if sctx := ctx.Statement(0); sctx != nil {
+	for _, sctx := range(ctx.AllStatement()) {
 		e.Visit(sctx)
 	}
 	// if ectx := ctx.Expression(); ectx != nil {
@@ -110,24 +110,43 @@ func (e *EvalVisitor) VisitExpressionExpression(ctx *parser.ExpressionExpression
 	return val.(*TLValue)
 }
 
-func (e *EvalVisitor) add(ctx *parser.AddExpressionContext) interface{} {
-	left := e.Visit(ctx.Expression(0)).(*TLValue)
-	right := e.Visit(ctx.Expression(1)).(*TLValue)
+func (e *EvalVisitor) add(left *TLValue, right *TLValue) interface{} {
 	return &TLValue{left.asDouble() + right.asDouble()}
 }
 
-func (e *EvalVisitor) sub(ctx *parser.AddExpressionContext) interface{} {
-	left := e.Visit(ctx.Expression(0)).(*TLValue)
-	right := e.Visit(ctx.Expression(1)).(*TLValue)
+func (e *EvalVisitor) sub(left *TLValue, right *TLValue) interface{} {
 	return &TLValue{left.asDouble() - right.asDouble()}
 }
 
+func (e *EvalVisitor) mult(left *TLValue, right *TLValue) interface{} {
+	return &TLValue{left.asDouble() * right.asDouble()}
+}
+
+func (e *EvalVisitor) div(left *TLValue, right *TLValue) interface{} {
+	return &TLValue{left.asDouble() / right.asDouble()}
+}
+
 func (e *EvalVisitor) VisitAddExpression(ctx *parser.AddExpressionContext) interface{} {
+	left := e.Visit(ctx.Expression(0)).(*TLValue)
+	right := e.Visit(ctx.Expression(1)).(*TLValue)
 	switch ctx.GetOp().GetTokenType() {
 	case parser.TinyLanguageLexerAdd:
-		return e.add(ctx)
+		return e.add(left, right)
 	case parser.TinyLanguageLexerSubtract:
-		return e.sub(ctx)
+		return e.sub(left, right)
+	default:
+		return nil
+	}
+}
+
+func (e *EvalVisitor) VisitMultExpression(ctx *parser.MultExpressionContext) interface{} {
+	left := e.Visit(ctx.Expression(0)).(*TLValue)
+	right := e.Visit(ctx.Expression(1)).(*TLValue)
+	switch ctx.GetOp().GetTokenType() {
+	case parser.TinyLanguageLexerMult:
+		return e.mult(left, right)
+	case parser.TinyLanguageLexerMod:
+		return e.div(left, right)
 	default:
 		return nil
 	}
@@ -145,6 +164,7 @@ func (e *EvalVisitor) VisitIdentifierExpression(ctx *parser.IdentifierExpression
 }
 
 func (e *EvalVisitor) VisitFunctionCallExpression(ctx *parser.FunctionCallExpressionContext) interface{} {
+	fmt.Printf("Enter VisitFunctionCallExpression\n")
 	val := e.Visit(ctx.FunctionCall()).(*TLValue)
 	return val
 }

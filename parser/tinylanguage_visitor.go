@@ -37,4 +37,7 @@ type TinyLanguageVisitor interface {
 
 	// Visit a parse tree produced by TinyLanguageParser#functionCallExpression.
 	VisitFunctionCallExpression(ctx *FunctionCallExpressionContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#multExpression.
+	VisitMultExpression(ctx *MultExpressionContext) interface{}
 }

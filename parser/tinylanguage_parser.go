@@ -16,40 +16,43 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 13, 60, 4,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 16, 63, 4,
 	2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 4, 5, 9, 5, 4, 6, 9, 6, 4, 7, 9, 7, 3,
 	2, 3, 2, 3, 3, 7, 3, 18, 10, 3, 12, 3, 14, 3, 21, 11, 3, 3, 4, 3, 4, 3,
 	4, 3, 4, 3, 4, 3, 4, 5, 4, 29, 10, 4, 3, 5, 3, 5, 3, 5, 3, 5, 3, 6, 3,
 	6, 3, 6, 5, 6, 38, 10, 6, 3, 6, 3, 6, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3,
-	7, 3, 7, 3, 7, 5, 7, 50, 10, 7, 3, 7, 3, 7, 3, 7, 7, 7, 55, 10, 7, 12,
-	7, 14, 7, 58, 11, 7, 3, 7, 2, 3, 12, 8, 2, 4, 6, 8, 10, 12, 2, 3, 3, 2,
-	12, 13, 2, 60, 2, 14, 3, 2, 2, 2, 4, 19, 3, 2, 2, 2, 6, 28, 3, 2, 2, 2,
-	8, 30, 3, 2, 2, 2, 10, 34, 3, 2, 2, 2, 12, 49, 3, 2, 2, 2, 14, 15, 5, 4,
-	3, 2, 15, 3, 3, 2, 2, 2, 16, 18, 5, 6, 4, 2, 17, 16, 3, 2, 2, 2, 18, 21,
-	3, 2, 2, 2, 19, 17, 3, 2, 2, 2, 19, 20, 3, 2, 2, 2, 20, 5, 3, 2, 2, 2,
-	21, 19, 3, 2, 2, 2, 22, 23, 5, 8, 5, 2, 23, 24, 7, 3, 2, 2, 24, 29, 3,
-	2, 2, 2, 25, 26, 5, 10, 6, 2, 26, 27, 7, 3, 2, 2, 27, 29, 3, 2, 2, 2, 28,
-	22, 3, 2, 2, 2, 28, 25, 3, 2, 2, 2, 29, 7, 3, 2, 2, 2, 30, 31, 7, 9, 2,
-	2, 31, 32, 7, 4, 2, 2, 32, 33, 5, 12, 7, 2, 33, 9, 3, 2, 2, 2, 34, 35,
-	7, 7, 2, 2, 35, 37, 7, 5, 2, 2, 36, 38, 5, 12, 7, 2, 37, 36, 3, 2, 2, 2,
-	37, 38, 3, 2, 2, 2, 38, 39, 3, 2, 2, 2, 39, 40, 7, 6, 2, 2, 40, 11, 3,
-	2, 2, 2, 41, 42, 8, 7, 1, 2, 42, 50, 7, 8, 2, 2, 43, 50, 5, 10, 6, 2, 44,
-	50, 7, 9, 2, 2, 45, 46, 7, 5, 2, 2, 46, 47, 5, 12, 7, 2, 47, 48, 7, 6,
-	2, 2, 48, 50, 3, 2, 2, 2, 49, 41, 3, 2, 2, 2, 49, 43, 3, 2, 2, 2, 49, 44,
-	3, 2, 2, 2, 49, 45, 3, 2, 2, 2, 50, 56, 3, 2, 2, 2, 51, 52, 12, 7, 2, 2,
-	52, 53, 9, 2, 2, 2, 53, 55, 5, 12, 7, 8, 54, 51, 3, 2, 2, 2, 55, 58, 3,
-	2, 2, 2, 56, 54, 3, 2, 2, 2, 56, 57, 3, 2, 2, 2, 57, 13, 3, 2, 2, 2, 58,
-	56, 3, 2, 2, 2, 7, 19, 28, 37, 49, 56,
+	7, 3, 7, 3, 7, 5, 7, 50, 10, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 3, 7, 7,
+	7, 58, 10, 7, 12, 7, 14, 7, 61, 11, 7, 3, 7, 2, 3, 12, 8, 2, 4, 6, 8, 10,
+	12, 2, 4, 3, 2, 14, 16, 3, 2, 12, 13, 2, 64, 2, 14, 3, 2, 2, 2, 4, 19,
+	3, 2, 2, 2, 6, 28, 3, 2, 2, 2, 8, 30, 3, 2, 2, 2, 10, 34, 3, 2, 2, 2, 12,
+	49, 3, 2, 2, 2, 14, 15, 5, 4, 3, 2, 15, 3, 3, 2, 2, 2, 16, 18, 5, 6, 4,
+	2, 17, 16, 3, 2, 2, 2, 18, 21, 3, 2, 2, 2, 19, 17, 3, 2, 2, 2, 19, 20,
+	3, 2, 2, 2, 20, 5, 3, 2, 2, 2, 21, 19, 3, 2, 2, 2, 22, 23, 5, 8, 5, 2,
+	23, 24, 7, 3, 2, 2, 24, 29, 3, 2, 2, 2, 25, 26, 5, 10, 6, 2, 26, 27, 7,
+	3, 2, 2, 27, 29, 3, 2, 2, 2, 28, 22, 3, 2, 2, 2, 28, 25, 3, 2, 2, 2, 29,
+	7, 3, 2, 2, 2, 30, 31, 7, 9, 2, 2, 31, 32, 7, 4, 2, 2, 32, 33, 5, 12, 7,
+	2, 33, 9, 3, 2, 2, 2, 34, 35, 7, 7, 2, 2, 35, 37, 7, 5, 2, 2, 36, 38, 5,
+	12, 7, 2, 37, 36, 3, 2, 2, 2, 37, 38, 3, 2, 2, 2, 38, 39, 3, 2, 2, 2, 39,
+	40, 7, 6, 2, 2, 40, 11, 3, 2, 2, 2, 41, 42, 8, 7, 1, 2, 42, 50, 7, 8, 2,
+	2, 43, 50, 5, 10, 6, 2, 44, 50, 7, 9, 2, 2, 45, 46, 7, 5, 2, 2, 46, 47,
+	5, 12, 7, 2, 47, 48, 7, 6, 2, 2, 48, 50, 3, 2, 2, 2, 49, 41, 3, 2, 2, 2,
+	49, 43, 3, 2, 2, 2, 49, 44, 3, 2, 2, 2, 49, 45, 3, 2, 2, 2, 50, 59, 3,
+	2, 2, 2, 51, 52, 12, 8, 2, 2, 52, 53, 9, 2, 2, 2, 53, 58, 5, 12, 7, 9,
+	54, 55, 12, 7, 2, 2, 55, 56, 9, 3, 2, 2, 56, 58, 5, 12, 7, 8, 57, 51, 3,
+	2, 2, 2, 57, 54, 3, 2, 2, 2, 58, 61, 3, 2, 2, 2, 59, 57, 3, 2, 2, 2, 59,
+	60, 3, 2, 2, 2, 60, 13, 3, 2, 2, 2, 61, 59, 3, 2, 2, 2, 8, 19, 28, 37,
+	49, 57, 59,
 }
 var deserializer = antlr.NewATNDeserializer(nil)
 var deserializedATN = deserializer.DeserializeFromUInt16(parserATN)
 
 var literalNames = []string{
 	"", "';'", "'='", "'('", "')'", "'println'", "", "", "", "", "'+'", "'-'",
+	"'*'", "'/'", "'%'",
 }
 var symbolicNames = []string{
 	"", "", "", "", "", "Println", "Number", "Identifier", "StringLiteral",
-	"Space", "Add", "Subtract",
+	"Space", "Add", "Subtract", "Mult", "Divide", "Mod",
 }
 
 var ruleNames = []string{
@@ -95,6 +98,9 @@ const (
 	TinyLanguageParserSpace         = 9
 	TinyLanguageParserAdd           = 10
 	TinyLanguageParserSubtract      = 11
+	TinyLanguageParserMult          = 12
+	TinyLanguageParserDivide        = 13
+	TinyLanguageParserMod           = 14
 )
 
 // TinyLanguageParser rules.
@@ -953,6 +959,74 @@ func (s *FunctionCallExpressionContext) Accept(visitor antlr.ParseTreeVisitor) i
 	}
 }
 
+type MultExpressionContext struct {
+	*ExpressionContext
+	op antlr.Token
+}
+
+func NewMultExpressionContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *MultExpressionContext {
+	var p = new(MultExpressionContext)
+
+	p.ExpressionContext = NewEmptyExpressionContext()
+	p.parser = parser
+	p.CopyFrom(ctx.(*ExpressionContext))
+
+	return p
+}
+
+func (s *MultExpressionContext) GetOp() antlr.Token { return s.op }
+
+func (s *MultExpressionContext) SetOp(v antlr.Token) { s.op = v }
+
+func (s *MultExpressionContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *MultExpressionContext) AllExpression() []IExpressionContext {
+	var ts = s.GetTypedRuleContexts(reflect.TypeOf((*IExpressionContext)(nil)).Elem())
+	var tst = make([]IExpressionContext, len(ts))
+
+	for i, t := range ts {
+		if t != nil {
+			tst[i] = t.(IExpressionContext)
+		}
+	}
+
+	return tst
+}
+
+func (s *MultExpressionContext) Expression(i int) IExpressionContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IExpressionContext)(nil)).Elem(), i)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpressionContext)
+}
+
+func (s *MultExpressionContext) Mult() antlr.TerminalNode {
+	return s.GetToken(TinyLanguageParserMult, 0)
+}
+
+func (s *MultExpressionContext) Divide() antlr.TerminalNode {
+	return s.GetToken(TinyLanguageParserDivide, 0)
+}
+
+func (s *MultExpressionContext) Mod() antlr.TerminalNode {
+	return s.GetToken(TinyLanguageParserMod, 0)
+}
+
+func (s *MultExpressionContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TinyLanguageVisitor:
+		return t.VisitMultExpression(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
 func (p *TinyLanguageParser) Expression() (localctx IExpressionContext) {
 	return p.expression(0)
 }
@@ -1039,9 +1113,9 @@ func (p *TinyLanguageParser) expression(_p int) (localctx IExpressionContext) {
 		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
 	}
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
-	p.SetState(54)
+	p.SetState(57)
 	p.GetErrorHandler().Sync(p)
-	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 4, p.GetParserRuleContext())
+	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 5, p.GetParserRuleContext())
 
 	for _alt != 2 && _alt != antlr.ATNInvalidAltNumber {
 		if _alt == 1 {
@@ -1049,40 +1123,77 @@ func (p *TinyLanguageParser) expression(_p int) (localctx IExpressionContext) {
 				p.TriggerExitRuleEvent()
 			}
 			_prevctx = localctx
-			localctx = NewAddExpressionContext(p, NewExpressionContext(p, _parentctx, _parentState))
-			p.PushNewRecursionContext(localctx, _startState, TinyLanguageParserRULE_expression)
-			p.SetState(49)
+			p.SetState(55)
+			p.GetErrorHandler().Sync(p)
+			switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 4, p.GetParserRuleContext()) {
+			case 1:
+				localctx = NewMultExpressionContext(p, NewExpressionContext(p, _parentctx, _parentState))
+				p.PushNewRecursionContext(localctx, _startState, TinyLanguageParserRULE_expression)
+				p.SetState(49)
 
-			if !(p.Precpred(p.GetParserRuleContext(), 5)) {
-				panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 5)", ""))
-			}
-			{
-				p.SetState(50)
-
-				var _lt = p.GetTokenStream().LT(1)
-
-				localctx.(*AddExpressionContext).op = _lt
-
-				_la = p.GetTokenStream().LA(1)
-
-				if !(_la == TinyLanguageParserAdd || _la == TinyLanguageParserSubtract) {
-					var _ri = p.GetErrorHandler().RecoverInline(p)
-
-					localctx.(*AddExpressionContext).op = _ri
-				} else {
-					p.GetErrorHandler().ReportMatch(p)
-					p.Consume()
+				if !(p.Precpred(p.GetParserRuleContext(), 6)) {
+					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 6)", ""))
 				}
-			}
-			{
-				p.SetState(51)
-				p.expression(6)
+				{
+					p.SetState(50)
+
+					var _lt = p.GetTokenStream().LT(1)
+
+					localctx.(*MultExpressionContext).op = _lt
+
+					_la = p.GetTokenStream().LA(1)
+
+					if !(((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<TinyLanguageParserMult)|(1<<TinyLanguageParserDivide)|(1<<TinyLanguageParserMod))) != 0) {
+						var _ri = p.GetErrorHandler().RecoverInline(p)
+
+						localctx.(*MultExpressionContext).op = _ri
+					} else {
+						p.GetErrorHandler().ReportMatch(p)
+						p.Consume()
+					}
+				}
+				{
+					p.SetState(51)
+					p.expression(7)
+				}
+
+			case 2:
+				localctx = NewAddExpressionContext(p, NewExpressionContext(p, _parentctx, _parentState))
+				p.PushNewRecursionContext(localctx, _startState, TinyLanguageParserRULE_expression)
+				p.SetState(52)
+
+				if !(p.Precpred(p.GetParserRuleContext(), 5)) {
+					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 5)", ""))
+				}
+				{
+					p.SetState(53)
+
+					var _lt = p.GetTokenStream().LT(1)
+
+					localctx.(*AddExpressionContext).op = _lt
+
+					_la = p.GetTokenStream().LA(1)
+
+					if !(_la == TinyLanguageParserAdd || _la == TinyLanguageParserSubtract) {
+						var _ri = p.GetErrorHandler().RecoverInline(p)
+
+						localctx.(*AddExpressionContext).op = _ri
+					} else {
+						p.GetErrorHandler().ReportMatch(p)
+						p.Consume()
+					}
+				}
+				{
+					p.SetState(54)
+					p.expression(6)
+				}
+
 			}
 
 		}
-		p.SetState(56)
+		p.SetState(59)
 		p.GetErrorHandler().Sync(p)
-		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 4, p.GetParserRuleContext())
+		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 5, p.GetParserRuleContext())
 	}
 
 	return localctx
@@ -1105,6 +1216,9 @@ func (p *TinyLanguageParser) Sempred(localctx antlr.RuleContext, ruleIndex, pred
 func (p *TinyLanguageParser) Expression_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 0:
+		return p.Precpred(p.GetParserRuleContext(), 6)
+
+	case 1:
 		return p.Precpred(p.GetParserRuleContext(), 5)
 
 	default:

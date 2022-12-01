@@ -1,1 +1,3 @@
-println(3213123);
+a = 1 + 2;
+b = 3 * 4;
+println(a * b);

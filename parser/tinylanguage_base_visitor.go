@@ -47,3 +47,7 @@ func (v *BaseTinyLanguageVisitor) VisitIdentifierExpression(ctx *IdentifierExpre
 func (v *BaseTinyLanguageVisitor) VisitFunctionCallExpression(ctx *FunctionCallExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
+
+func (v *BaseTinyLanguageVisitor) VisitMultExpression(ctx *MultExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
