@@ -52,18 +52,30 @@ func (e *EvalVisitor) VisitChildren(node antlr.RuleNode) interface{} {
 func (e *EvalVisitor) VisitBlock(ctx *parser.BlockContext) interface{} {
 	fmt.Printf("Enter VisitBlock\n")
 	scope := Scope{e.scope, make(map[string]*TLValue), false}
-	// if fctx := ctx.FunctionDecl(0); fctx != nil {
-	// 	e.Visit(fctx)
-	// }
-	for _, sctx := range(ctx.AllStatement()) {
+	for _, fctx := range ctx.AllFunctionDecl() {
+		e.Visit(fctx)
+	}
+	for _, sctx := range ctx.AllStatement() {
 		e.Visit(sctx)
 	}
-	// if ectx := ctx.Expression(); ectx != nil {
-	// 	returnValue.value = e.Visit(ectx).(*TLValue)
-	// 	e.scope = scope.parent
-	// 	return returnValue, true
-	// }
+	if ectx := ctx.Expression(); ectx != nil {
+		val := e.Visit(ectx).(*TLValue)
+		e.scope = scope.parent
+		return val
+	}
 	e.scope = scope.parent
+	return nil
+}
+
+func (e *EvalVisitor) VisitFunctionDecl(ctx *parser.FunctionDeclContext) interface{} {
+	fmt.Printf("Enter VisitFunctionDecl\n")
+	var params []antlr.TerminalNode
+	if idList := ctx.IdList().(*parser.IdListContext); idList != nil {
+		params = idList.AllIdentifier()
+	}
+	block := ctx.Block()
+	id := ctx.Identifier().GetText() + "-" + strconv.Itoa(len(params))
+	e.functions[id] = &Function{e.scope, params, block}
 	return nil
 }
 
@@ -80,21 +92,22 @@ func (e *EvalVisitor) VisitAssignment(ctx *parser.AssignmentContext) interface{}
 	return nil
 }
 
-// func (e *EvalVisitor) VisitIdentifierFunctionCall(ctx *parser.IdentifierFunctionCallContext) *TLValue {
-// 	var params []parser.IExpressionContext
-// 	if exprList := ctx.ExprList(); exprList != nil {
-// 		params = exprList.(*parser.ExprListContext).AllExpression()
-// 	}
-// 	id := ctx.Identifier().GetText() + strconv.Itoa(len(params))
-// 	if function := e.functions[id]; function != nil {
-// 		var args []*TLValue
-// 		for _, param := range params {
-// 			args = append(args, e.Visit(param).(*TLValue))
-// 		}
-// 		return function.invoke(args, e.functions)
-// 	}
-// 	return nil
-// }
+func (e *EvalVisitor) VisitIdentifierFunctionCall(ctx *parser.IdentifierFunctionCallContext) interface{} {
+	fmt.Printf("Enter VisitIdentifierFunctionCall\n")
+	var params []parser.IExpressionContext
+	if exprList := ctx.ExprList(); exprList != nil {
+		params = exprList.(*parser.ExprListContext).AllExpression()
+	}
+	id := ctx.Identifier().GetText() + "-" + strconv.Itoa(len(params))
+	if function := e.functions[id]; function != nil {
+		var args []*TLValue
+		for _, param := range params {
+			args = append(args, e.Visit(param).(*TLValue))
+		}
+		return function.invoke(args, e.functions)
+	}
+	return nil
+}
 
 func (e *EvalVisitor) VisitPrintlnFunctionCall(ctx *parser.PrintlnFunctionCallContext) interface{} {
 	fmt.Printf("Enter VisitPrintlnFunctionCall\n")

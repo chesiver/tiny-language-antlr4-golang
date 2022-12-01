@@ -20,8 +20,20 @@ type TinyLanguageVisitor interface {
 	// Visit a parse tree produced by TinyLanguageParser#assignment.
 	VisitAssignment(ctx *AssignmentContext) interface{}
 
+	// Visit a parse tree produced by TinyLanguageParser#functionDecl.
+	VisitFunctionDecl(ctx *FunctionDeclContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#identifierFunctionCall.
+	VisitIdentifierFunctionCall(ctx *IdentifierFunctionCallContext) interface{}
+
 	// Visit a parse tree produced by TinyLanguageParser#printlnFunctionCall.
 	VisitPrintlnFunctionCall(ctx *PrintlnFunctionCallContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#idList.
+	VisitIdList(ctx *IdListContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#exprList.
+	VisitExprList(ctx *ExprListContext) interface{}
 
 	// Visit a parse tree produced by TinyLanguageParser#powerExpression.
 	VisitPowerExpression(ctx *PowerExpressionContext) interface{}

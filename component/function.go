@@ -17,13 +17,14 @@ func (f *Function) invoke(args []*TLValue, functions map[string]*Function) *TLVa
 		fmt.Printf("Illegal Function call\n")
 		return nil
 	}
-	scopeNext := Scope{
+	scopeNext := &Scope{
 		parent:     f.parentScope,
-		variables:  make(map[string]*TLValue, 0),
+		variables:  make(map[string]*TLValue),
 		isFunction: true,
 	}
 	for i := 0; i < len(f.params); i++ {
 		scopeNext.assignParam(f.params[i].GetText(), args[i])
 	}
-	return nil
+	evalNext := EvalVisitor{scope: scopeNext, functions: functions}
+	return evalNext.Visit(f.block).(*TLValue)
 }

@@ -2,8 +2,7 @@ grammar TinyLanguage; // rename to distinguish from Expr.g4
 
 prog: block;
 
-block: ( statement )*;
-// block: ( statement | functionDecl)* ( Return expression ';')?;
+block: ( statement | functionDecl)* ( Return expression ';')?;
 
 statement:
 	assignment ';'
@@ -12,17 +11,19 @@ statement:
 
 assignment: Identifier '=' expression;
 
+functionDecl
+ : Def Identifier '(' idList? ')' block End
+ ;
+
 functionCall:
-	// Identifier '(' exprList? ')'	# identifierFunctionCall
+	Identifier '(' exprList? ')'	# identifierFunctionCall
     // built-in
-	Println '(' expression? ')'	# printlnFunctionCall
+	| Println '(' expression? ')'	# printlnFunctionCall
     ;
 
-// functionDecl: Def Identifier '(' idList? ')' block End;
+idList: Identifier ( ',' Identifier)*;
 
-// idList: Identifier ( ',' Identifier)*;
-
-// exprList: expression ( ',' expression)*;
+exprList: expression ( ',' expression)*;
 
 expression:
 	// '-' expression											# unaryMinusExpression
@@ -36,9 +37,9 @@ expression:
     ;
 
 Println: 'println';
-// Def: 'def';
-// Return: 'return';
-// End: 'end';
+Def: 'def';
+Return: 'return';
+End: 'end';
 
 Number: Int ( '.' Digit*)?
     ;

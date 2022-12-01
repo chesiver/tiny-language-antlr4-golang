@@ -24,7 +24,23 @@ func (v *BaseTinyLanguageVisitor) VisitAssignment(ctx *AssignmentContext) interf
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTinyLanguageVisitor) VisitFunctionDecl(ctx *FunctionDeclContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitIdentifierFunctionCall(ctx *IdentifierFunctionCallContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTinyLanguageVisitor) VisitPrintlnFunctionCall(ctx *PrintlnFunctionCallContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitIdList(ctx *IdListContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitExprList(ctx *ExprListContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
