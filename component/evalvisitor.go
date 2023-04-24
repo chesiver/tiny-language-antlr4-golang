@@ -3,7 +3,6 @@ package component
 import (
 	"fmt"
 	"math"
-	"reflect"
 	"strconv"
 	"strings"
 	"tiny-language-antlr4-llvm-ir/parser"
@@ -25,7 +24,7 @@ func NewEvalVisitor() *EvalVisitor {
 }
 
 func (e *EvalVisitor) Visit(tree antlr.ParseTree) interface{} {
-	fmt.Printf("visit input type: %v\n", reflect.TypeOf(tree))
+	// fmt.Printf("visit input type: %v\n", reflect.TypeOf(tree))
 	switch t := tree.(type) {
 	case *antlr.ErrorNodeImpl:
 		fmt.Printf("Error: - %v\n", t.GetText())
@@ -49,7 +48,7 @@ func (e *EvalVisitor) VisitChildren(node antlr.RuleNode) interface{} {
 }
 
 func (e *EvalVisitor) VisitBlock(ctx *parser.BlockContext) interface{} {
-	fmt.Printf("Enter VisitBlock\n")
+	fmt.Printf("Enter - Block\n")
 	scope := Scope{e.scope, make(map[string]*TLValue), false}
 	for _, fctx := range ctx.AllFunctionDecl() {
 		e.Visit(fctx)
@@ -63,6 +62,20 @@ func (e *EvalVisitor) VisitBlock(ctx *parser.BlockContext) interface{} {
 		return val
 	}
 	e.scope = scope.parent
+	return VOID
+}
+
+func (e *EvalVisitor) VisitForStatement(ctx *parser.ForStatementContext) interface{} {
+	fmt.Printf("Enter - For Statement\n")
+	start := e.Visit(ctx.Expression(0)).(*TLValue).asInt()
+	end := e.Visit(ctx.Expression(1)).(*TLValue).asInt()
+	for i := start; i < end; i += 1 {
+		e.scope.Assign(ctx.Identifier().GetText(), &TLValue{i})
+		r := e.Visit(ctx.Block()).(*TLValue)
+		if r != VOID {
+			return r
+		}
+	}
 	return VOID
 }
 
@@ -104,6 +117,7 @@ func (e *EvalVisitor) VisitAssignment(ctx *parser.AssignmentContext) interface{}
 	val := e.Visit(ctx.Expression()).(*TLValue)
 	name := ctx.Identifier().GetText()
 	e.scope.Assign(name, val)
+	fmt.Printf("In VisitAssignment - name: %v value: %v\n", name, val.value)
 	return VOID
 }
 
@@ -180,7 +194,7 @@ func (e *EvalVisitor) gtEq(left *TLValue, right *TLValue) interface{} {
 }
 
 func (e *EvalVisitor) add(left *TLValue, right *TLValue) interface{} {
-	if left.isDouble() && right.isDouble() {
+	if left.isNumber() && right.isNumber() {
 		return &TLValue{left.asDouble() + right.asDouble()}
 	}
 	if left.isString() && right.isString() {
@@ -194,11 +208,11 @@ func (e *EvalVisitor) sub(left *TLValue, right *TLValue) interface{} {
 }
 
 func (e *EvalVisitor) mult(left *TLValue, right *TLValue) interface{} {
-	if left.isDouble() && right.isDouble() {
+	if left.isNumber() && right.isNumber() {
 		return &TLValue{left.asDouble() * right.asDouble()}
 	}
-	if left.isString() && right.isDouble() {
-		times := int(right.asDouble())
+	if left.isString() && right.isNumber() {
+		times := right.asInt()
 		sb := strings.Builder{}
 		for i := 0; i < times; i++ {
 			sb.WriteString(left.asString())

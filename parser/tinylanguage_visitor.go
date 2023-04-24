@@ -23,6 +23,9 @@ type TinyLanguageVisitor interface {
 	// Visit a parse tree produced by TinyLanguageParser#functionDecl.
 	VisitFunctionDecl(ctx *FunctionDeclContext) interface{}
 
+	// Visit a parse tree produced by TinyLanguageParser#forStatement.
+	VisitForStatement(ctx *ForStatementContext) interface{}
+
 	// Visit a parse tree produced by TinyLanguageParser#identifierFunctionCall.
 	VisitIdentifierFunctionCall(ctx *IdentifierFunctionCallContext) interface{}
 

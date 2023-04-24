@@ -28,6 +28,10 @@ func (v *BaseTinyLanguageVisitor) VisitFunctionDecl(ctx *FunctionDeclContext) in
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTinyLanguageVisitor) VisitForStatement(ctx *ForStatementContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTinyLanguageVisitor) VisitIdentifierFunctionCall(ctx *IdentifierFunctionCallContext) interface{} {
 	return v.VisitChildren(ctx)
 }

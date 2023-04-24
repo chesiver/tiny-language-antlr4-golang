@@ -4,11 +4,18 @@ prog: block;
 
 block: ( statement | functionDecl)* ( Return expression ';')?;
 
-statement: assignment ';' | functionCall ';' | ifStatement;
+statement:
+	assignment ';'
+	| functionCall ';'
+	| ifStatement
+	| forStatement;
 
 assignment: Identifier '=' expression;
 
 functionDecl: Def Identifier '(' idList? ')' block End;
+
+forStatement:
+	For Identifier '=' expression To expression Do block End;
 
 functionCall:
 	Identifier '(' exprList? ')' # identifierFunctionCall
@@ -46,6 +53,8 @@ If: 'if';
 Else: 'else';
 Do: 'do';
 Return: 'return';
+For: 'for';
+To: 'to';
 End: 'end';
 
 Bool: 'true' | 'false';
