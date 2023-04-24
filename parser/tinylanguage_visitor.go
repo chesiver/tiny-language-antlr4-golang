@@ -53,17 +53,32 @@ type TinyLanguageVisitor interface {
 	// Visit a parse tree produced by TinyLanguageParser#exprList.
 	VisitExprList(ctx *ExprListContext) interface{}
 
+	// Visit a parse tree produced by TinyLanguageParser#boolExpression.
+	VisitBoolExpression(ctx *BoolExpressionContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#numberExpression.
+	VisitNumberExpression(ctx *NumberExpressionContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#identifierExpression.
+	VisitIdentifierExpression(ctx *IdentifierExpressionContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#orExpression.
+	VisitOrExpression(ctx *OrExpressionContext) interface{}
+
 	// Visit a parse tree produced by TinyLanguageParser#unaryMinusExpression.
 	VisitUnaryMinusExpression(ctx *UnaryMinusExpressionContext) interface{}
 
 	// Visit a parse tree produced by TinyLanguageParser#powerExpression.
 	VisitPowerExpression(ctx *PowerExpressionContext) interface{}
 
+	// Visit a parse tree produced by TinyLanguageParser#eqExpression.
+	VisitEqExpression(ctx *EqExpressionContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#andExpression.
+	VisitAndExpression(ctx *AndExpressionContext) interface{}
+
 	// Visit a parse tree produced by TinyLanguageParser#stringExpression.
 	VisitStringExpression(ctx *StringExpressionContext) interface{}
-
-	// Visit a parse tree produced by TinyLanguageParser#boolExpression.
-	VisitBoolExpression(ctx *BoolExpressionContext) interface{}
 
 	// Visit a parse tree produced by TinyLanguageParser#expressionExpression.
 	VisitExpressionExpression(ctx *ExpressionExpressionContext) interface{}
@@ -74,15 +89,18 @@ type TinyLanguageVisitor interface {
 	// Visit a parse tree produced by TinyLanguageParser#compExpression.
 	VisitCompExpression(ctx *CompExpressionContext) interface{}
 
-	// Visit a parse tree produced by TinyLanguageParser#numberExpression.
-	VisitNumberExpression(ctx *NumberExpressionContext) interface{}
-
-	// Visit a parse tree produced by TinyLanguageParser#identifierExpression.
-	VisitIdentifierExpression(ctx *IdentifierExpressionContext) interface{}
-
 	// Visit a parse tree produced by TinyLanguageParser#functionCallExpression.
 	VisitFunctionCallExpression(ctx *FunctionCallExpressionContext) interface{}
 
 	// Visit a parse tree produced by TinyLanguageParser#multExpression.
 	VisitMultExpression(ctx *MultExpressionContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#listExpression.
+	VisitListExpression(ctx *ListExpressionContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#list.
+	VisitList(ctx *ListContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#indexes.
+	VisitIndexes(ctx *IndexesContext) interface{}
 }

@@ -43,13 +43,20 @@ expression:
 	| expression op = ('*' | '/' | '%') expression			# multExpression
 	| expression op = ('+' | '-') expression				# addExpression
 	| expression op = ('>=' | '<=' | '>' | '<') expression	# compExpression
+	| expression op = ('==' | '!=') expression				# eqExpression
+	| expression '&&' expression							# andExpression
+	| expression '||' expression							# orExpression
 	| Number												# numberExpression
 	| Bool													# boolExpression
 	| functionCall											# functionCallExpression
-	| Identifier											# identifierExpression
+	| list indexes?											# listExpression
+	| Identifier indexes?									# identifierExpression
 	| StringLiteral											# stringExpression
 	| '(' expression ')'									# expressionExpression;
 
+list: '[' exprList? ']';
+
+indexes: ( '[' expression ']')+;
 Println: 'println';
 Def: 'def';
 If: 'if';
@@ -79,13 +86,17 @@ fragment Int: [1-9] Digit* | '0';
 
 fragment Digit: [0-9];
 
+Or: '||';
+And: '&&';
+Equals: '==';
+NEquals: '!=';
+GTEquals: '>=';
+LTEquals: '<=';
 Power: '^';
 Add: '+';
 Subtract: '-';
 Mult: '*';
 Divide: '/';
 Mod: '%';
-GTEquals: '>=';
-LTEquals: '<=';
 GT: '>';
 LT: '<';

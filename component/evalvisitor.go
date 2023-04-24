@@ -3,6 +3,7 @@ package component
 import (
 	"fmt"
 	"math"
+	"reflect"
 	"strconv"
 	"strings"
 	"tiny-language-antlr4-llvm-ir/parser"
@@ -24,7 +25,7 @@ func NewEvalVisitor() *EvalVisitor {
 }
 
 func (e *EvalVisitor) Visit(tree antlr.ParseTree) interface{} {
-	// fmt.Printf("visit input type: %v\n", reflect.TypeOf(tree))
+	fmt.Printf("visit input type: %v\n", reflect.TypeOf(tree))
 	switch t := tree.(type) {
 	case *antlr.ErrorNodeImpl:
 		fmt.Printf("Error: - %v\n", t.GetText())
@@ -81,7 +82,6 @@ func (e *EvalVisitor) VisitForStatement(ctx *parser.ForStatementContext) interfa
 
 func (e *EvalVisitor) VisitWhileStatement(ctx *parser.WhileStatementContext) interface{} {
 	fmt.Printf("Enter - While Statement\n")
-	fmt.Printf("!!!!!!!! %v\n", e.Visit(ctx.Expression()).(*TLValue).value)
 	for e.Visit(ctx.Expression()).(*TLValue).asBool() {
 		r := e.Visit(ctx.Block())
 		if r != VOID {
@@ -161,6 +161,7 @@ func (e *EvalVisitor) VisitPrintlnFunctionCall(ctx *parser.PrintlnFunctionCallCo
 }
 
 func (e *EvalVisitor) VisitExpressionExpression(ctx *parser.ExpressionExpressionContext) interface{} {
+	fmt.Printf("Enter - Expression Expression\n")
 	val := e.Visit(ctx.Expression())
 	return val.(*TLValue)
 }
@@ -177,7 +178,6 @@ func (e *EvalVisitor) VisitUnaryMinusExpression(ctx *parser.UnaryMinusExpression
 }
 
 func (e *EvalVisitor) lt(left *TLValue, right *TLValue) interface{} {
-	fmt.Printf("!!!!!! in lt %v %v\n", left, right)
 	if left.isNumber() && right.isNumber() {
 		return &TLValue{left.asDouble() < right.asDouble()}
 	}
@@ -188,7 +188,7 @@ func (e *EvalVisitor) lt(left *TLValue, right *TLValue) interface{} {
 }
 
 func (e *EvalVisitor) ltEq(left *TLValue, right *TLValue) interface{} {
-	if left.isDouble() && right.isDouble() {
+	if left.isNumber() && right.isNumber() {
 		return &TLValue{left.asDouble() <= right.asDouble()}
 	}
 	if left.isString() && right.isString() {
@@ -198,7 +198,7 @@ func (e *EvalVisitor) ltEq(left *TLValue, right *TLValue) interface{} {
 }
 
 func (e *EvalVisitor) gt(left *TLValue, right *TLValue) interface{} {
-	if left.isDouble() && right.isDouble() {
+	if left.isNumber() && right.isNumber() {
 		return &TLValue{left.asDouble() > right.asDouble()}
 	}
 	if left.isString() && right.isString() {
@@ -208,7 +208,7 @@ func (e *EvalVisitor) gt(left *TLValue, right *TLValue) interface{} {
 }
 
 func (e *EvalVisitor) gtEq(left *TLValue, right *TLValue) interface{} {
-	if left.isDouble() && right.isDouble() {
+	if left.isNumber() && right.isNumber() {
 		return &TLValue{left.asDouble() >= right.asDouble()}
 	}
 	if left.isString() && right.isString() {
@@ -248,6 +248,30 @@ func (e *EvalVisitor) mult(left *TLValue, right *TLValue) interface{} {
 
 func (e *EvalVisitor) div(left *TLValue, right *TLValue) interface{} {
 	return &TLValue{left.asDouble() / right.asDouble()}
+}
+
+func (e *EvalVisitor) VisitEqExpression(ctx *parser.EqExpressionContext) interface{} {
+	left := e.Visit(ctx.Expression(0)).(*TLValue)
+	right := e.Visit(ctx.Expression(1)).(*TLValue)
+	switch ctx.GetOp().GetTokenType() {
+	case parser.TinyLanguageLexerEquals:
+		return &TLValue{value: left.equals(right)}
+	case parser.TinyLanguageLexerNEquals:
+		return &TLValue{value: !left.equals(right)}
+	}
+	return NULL
+}
+
+func (e *EvalVisitor) VisitAndExpression(ctx *parser.AndExpressionContext) interface{} {
+	left := e.Visit(ctx.Expression(0)).(*TLValue)
+	right := e.Visit(ctx.Expression(1)).(*TLValue)
+	return &TLValue{left.asBool() && right.asBool()}
+}
+
+func (e *EvalVisitor) VisitOrExpression(ctx *parser.OrExpressionContext) interface{} {
+	left := e.Visit(ctx.Expression(0)).(*TLValue)
+	right := e.Visit(ctx.Expression(1)).(*TLValue)
+	return &TLValue{left.asBool() || right.asBool()}
 }
 
 func (e *EvalVisitor) VisitCompExpression(ctx *parser.CompExpressionContext) interface{} {
@@ -312,6 +336,10 @@ func (e *EvalVisitor) VisitBoolExpression(ctx *parser.BoolExpressionContext) int
 func (e *EvalVisitor) VisitIdentifierExpression(ctx *parser.IdentifierExpressionContext) interface{} {
 	id := ctx.Identifier().GetText()
 	val := e.scope.resolve(id)
+	if ctx.Indexes() != nil {
+		exprs := ctx.Indexes().(*parser.IndexesContext).AllExpression()
+		val = e.resolveIndexes(val, exprs).(*TLValue)
+	}
 	return val
 }
 
@@ -324,5 +352,38 @@ func (e *EvalVisitor) VisitStringExpression(ctx *parser.StringExpressionContext)
 func (e *EvalVisitor) VisitFunctionCallExpression(ctx *parser.FunctionCallExpressionContext) interface{} {
 	fmt.Printf("Enter VisitFunctionCallExpression\n")
 	val := e.Visit(ctx.FunctionCall()).(*TLValue)
+	return val
+}
+
+func (e *EvalVisitor) resolveIndexes(val *TLValue, indexes []parser.IExpressionContext) interface{} {
+	for _, IExprCtx := range indexes {
+		idx := e.Visit(IExprCtx).(*TLValue).asInt()
+		if val.isString() {
+			val = &TLValue{val.asString()[idx : idx+1]}
+		} else {
+			val = val.asList()[idx]
+		}
+	}
+	return val
+}
+
+func (e *EvalVisitor) VisitList(ctx *parser.ListContext) interface{} {
+	fmt.Printf("Enter - List\n")
+	arr := make([]*TLValue, 0)
+	if ctx.ExprList() != nil {
+		for _, expr := range ctx.ExprList().(*parser.ExprListContext).AllExpression() {
+			arr = append(arr, e.Visit(expr).(*TLValue))
+		}
+	}
+	return &TLValue{arr}
+}
+
+func (e *EvalVisitor) VisitListExpression(ctx *parser.ListExpressionContext) interface{} {
+	fmt.Printf("Enter - List Expression\n")
+	val := e.Visit(ctx.List()).(*TLValue)
+	if ctx.Indexes() != nil {
+		exps := make([]parser.IExpressionContext, 0)
+		val = e.resolveIndexes(val, exps).(*TLValue)
+	}
 	return val
 }

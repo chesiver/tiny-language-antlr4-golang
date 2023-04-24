@@ -8,7 +8,7 @@
             "name": "antlr4-flow",
             "type": "antlr-debug",
             "request": "launch",
-            "input": "tl/for.tl",
+            "input": "tl/list.tl",
             "grammar": "grammar/TinyLanguage.g4",
             "startRule": "prog",
             "printParseTree": true,

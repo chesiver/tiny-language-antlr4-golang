@@ -50,3 +50,29 @@ func (v *TLValue) isBool() bool {
 func (v *TLValue) asBool() bool {
 	return v.value.(bool)
 }
+
+func (v *TLValue) asList() []*TLValue {
+	return v.value.([]*TLValue)
+}
+
+func (v *TLValue) equals(other *TLValue) bool {
+	if v == NULL {
+		return other == NULL
+	}
+	if v == other {
+		return true
+	}
+	if v.isInt() && other.isInt() {
+		return v.asInt() == other.asInt()
+	}
+	if v.isDouble() && other.isDouble() {
+		return v.asDouble() == other.asDouble()
+	}
+	if v.isString() && other.isString() {
+		return v.asString() == other.asString()
+	}
+	if v.isBool() && other.isBool() {
+		return v.asBool() == other.asBool()
+	}
+	return false
+}

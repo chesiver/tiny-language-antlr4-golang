@@ -68,6 +68,22 @@ func (v *BaseTinyLanguageVisitor) VisitExprList(ctx *ExprListContext) interface{
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTinyLanguageVisitor) VisitBoolExpression(ctx *BoolExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitNumberExpression(ctx *NumberExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitIdentifierExpression(ctx *IdentifierExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitOrExpression(ctx *OrExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTinyLanguageVisitor) VisitUnaryMinusExpression(ctx *UnaryMinusExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -76,11 +92,15 @@ func (v *BaseTinyLanguageVisitor) VisitPowerExpression(ctx *PowerExpressionConte
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTinyLanguageVisitor) VisitStringExpression(ctx *StringExpressionContext) interface{} {
+func (v *BaseTinyLanguageVisitor) VisitEqExpression(ctx *EqExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTinyLanguageVisitor) VisitBoolExpression(ctx *BoolExpressionContext) interface{} {
+func (v *BaseTinyLanguageVisitor) VisitAndExpression(ctx *AndExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitStringExpression(ctx *StringExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -96,18 +116,22 @@ func (v *BaseTinyLanguageVisitor) VisitCompExpression(ctx *CompExpressionContext
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTinyLanguageVisitor) VisitNumberExpression(ctx *NumberExpressionContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseTinyLanguageVisitor) VisitIdentifierExpression(ctx *IdentifierExpressionContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseTinyLanguageVisitor) VisitFunctionCallExpression(ctx *FunctionCallExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseTinyLanguageVisitor) VisitMultExpression(ctx *MultExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitListExpression(ctx *ListExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitList(ctx *ListContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitIndexes(ctx *IndexesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
