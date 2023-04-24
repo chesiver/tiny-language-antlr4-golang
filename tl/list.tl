@@ -1,2 +1,4 @@
 a = [1, 2, 3];
-println(a[0]);
+println(a);
+a[0] = -1;
+println(a);

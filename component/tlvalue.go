@@ -1,9 +1,13 @@
 package component
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+)
 
 var VOID = &TLValue{}
 var NULL = &TLValue{}
+var INVALID = &TLValue{}
 
 type TLValue struct {
 	value interface{}
@@ -51,6 +55,10 @@ func (v *TLValue) asBool() bool {
 	return v.value.(bool)
 }
 
+func (v *TLValue) isList() bool {
+	return reflect.TypeOf(v.value).Kind() == reflect.Slice
+}
+
 func (v *TLValue) asList() []*TLValue {
 	return v.value.([]*TLValue)
 }
@@ -75,4 +83,18 @@ func (v *TLValue) equals(other *TLValue) bool {
 		return v.asBool() == other.asBool()
 	}
 	return false
+}
+
+func (v *TLValue) String() string {
+	if v.isList() {
+		arr := v.asList()
+		res := "["
+		for i := 0; i < len(arr)-1; i += 1 {
+			res += arr[i].String() + ", "
+		}
+		res += arr[len(arr)-1].String() + "]"
+		return res
+	} else {
+		return fmt.Sprintf("%v", v.value)
+	}
 }

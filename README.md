@@ -1,6 +1,6 @@
 # tiny-language-antlr4-golang
 
-This is a golang implementation of 
+This is a rough golang implementation of 
 
 https://github.com/bkiers/tiny-language-antlr4
 

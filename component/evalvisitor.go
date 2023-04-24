@@ -124,12 +124,37 @@ func (e *EvalVisitor) VisitStatement(ctx *parser.StatementContext) interface{} {
 	return e.VisitChildren(ctx)
 }
 
+func (e *EvalVisitor) setAtIndex(ctx antlr.ParserRuleContext, indexes []parser.IExpressionContext, val *TLValue, newVal *TLValue) *TLValue {
+	if !val.isList() {
+		return INVALID
+	}
+	for i := 0; i < len(indexes)-1; i += 1 {
+		idx := e.Visit(indexes[i]).(*TLValue)
+		if !idx.isNumber() {
+			return INVALID
+		}
+		val = val.asList()[idx.asInt()]
+	}
+	idx := e.Visit(indexes[len(indexes)-1]).(*TLValue)
+	if !idx.isNumber() {
+		return INVALID
+	}
+	val.asList()[idx.asInt()] = newVal
+	return val
+}
+
 func (e *EvalVisitor) VisitAssignment(ctx *parser.AssignmentContext) interface{} {
 	fmt.Printf("Enter VisitAssignment\n")
-	val := e.Visit(ctx.Expression()).(*TLValue)
-	name := ctx.Identifier().GetText()
-	e.scope.Assign(name, val)
-	fmt.Printf("In VisitAssignment - name: %v value: %v\n", name, val.value)
+	newVal := e.Visit(ctx.Expression()).(*TLValue)
+	if ctx.Indexes() != nil {
+		val := e.scope.resolve(ctx.Identifier().GetText())
+		exps := ctx.Indexes().(*parser.IndexesContext).AllExpression()
+		e.setAtIndex(ctx, exps, val, newVal)
+	} else {
+		name := ctx.Identifier().GetText()
+		e.scope.Assign(name, newVal)
+		fmt.Printf("In VisitAssignment - name: %v value: %v\n", name, newVal.value)
+	}
 	return VOID
 }
 
@@ -153,7 +178,7 @@ func (e *EvalVisitor) VisitIdentifierFunctionCall(ctx *parser.IdentifierFunction
 func (e *EvalVisitor) VisitPrintlnFunctionCall(ctx *parser.PrintlnFunctionCallContext) interface{} {
 	fmt.Printf("Enter VisitPrintlnFunctionCall\n")
 	if expr := ctx.Expression(); expr != nil {
-		fmt.Printf("%v\n", e.Visit(expr).(*TLValue).value)
+		fmt.Printf("%s\n", e.Visit(expr).(*TLValue).String())
 	} else {
 		fmt.Println()
 	}

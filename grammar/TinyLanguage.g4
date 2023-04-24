@@ -11,7 +11,7 @@ statement:
 	| forStatement
 	| whileStatement;
 
-assignment: Identifier '=' expression;
+assignment: Identifier indexes? '=' expression;
 
 functionDecl: Def Identifier '(' idList? ')' block End;
 
