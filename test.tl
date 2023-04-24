@@ -7,3 +7,5 @@ c = test(1, 2);
 println(c);
 
 println("1234" * 3);
+
+println(true);

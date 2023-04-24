@@ -2,6 +2,9 @@ package component
 
 import "reflect"
 
+var VOID = &TLValue{}
+var NULL = &TLValue{}
+
 type TLValue struct {
 	value interface{}
 }
@@ -20,4 +23,12 @@ func (v *TLValue) isString() bool {
 
 func (v *TLValue) asString() string {
 	return v.value.(string)
+}
+
+func (v *TLValue) isBool() bool {
+	return reflect.TypeOf(v.value).Name() == "bool"
+}
+
+func (v *TLValue) asBool() bool {
+	return v.value.(bool)
 }

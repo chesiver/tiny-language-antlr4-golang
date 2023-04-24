@@ -29,6 +29,18 @@ type TinyLanguageVisitor interface {
 	// Visit a parse tree produced by TinyLanguageParser#printlnFunctionCall.
 	VisitPrintlnFunctionCall(ctx *PrintlnFunctionCallContext) interface{}
 
+	// Visit a parse tree produced by TinyLanguageParser#ifStatement.
+	VisitIfStatement(ctx *IfStatementContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#ifStat.
+	VisitIfStat(ctx *IfStatContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#elseIfStat.
+	VisitElseIfStat(ctx *ElseIfStatContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#elseStat.
+	VisitElseStat(ctx *ElseStatContext) interface{}
+
 	// Visit a parse tree produced by TinyLanguageParser#idList.
 	VisitIdList(ctx *IdListContext) interface{}
 
@@ -41,11 +53,17 @@ type TinyLanguageVisitor interface {
 	// Visit a parse tree produced by TinyLanguageParser#stringExpression.
 	VisitStringExpression(ctx *StringExpressionContext) interface{}
 
+	// Visit a parse tree produced by TinyLanguageParser#boolExpression.
+	VisitBoolExpression(ctx *BoolExpressionContext) interface{}
+
 	// Visit a parse tree produced by TinyLanguageParser#expressionExpression.
 	VisitExpressionExpression(ctx *ExpressionExpressionContext) interface{}
 
 	// Visit a parse tree produced by TinyLanguageParser#addExpression.
 	VisitAddExpression(ctx *AddExpressionContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#compExpression.
+	VisitCompExpression(ctx *CompExpressionContext) interface{}
 
 	// Visit a parse tree produced by TinyLanguageParser#numberExpression.
 	VisitNumberExpression(ctx *NumberExpressionContext) interface{}

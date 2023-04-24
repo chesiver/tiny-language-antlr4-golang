@@ -36,6 +36,22 @@ func (v *BaseTinyLanguageVisitor) VisitPrintlnFunctionCall(ctx *PrintlnFunctionC
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTinyLanguageVisitor) VisitIfStatement(ctx *IfStatementContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitIfStat(ctx *IfStatContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitElseIfStat(ctx *ElseIfStatContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitElseStat(ctx *ElseStatContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTinyLanguageVisitor) VisitIdList(ctx *IdListContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -52,11 +68,19 @@ func (v *BaseTinyLanguageVisitor) VisitStringExpression(ctx *StringExpressionCon
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTinyLanguageVisitor) VisitBoolExpression(ctx *BoolExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTinyLanguageVisitor) VisitExpressionExpression(ctx *ExpressionExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseTinyLanguageVisitor) VisitAddExpression(ctx *AddExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitCompExpression(ctx *CompExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
