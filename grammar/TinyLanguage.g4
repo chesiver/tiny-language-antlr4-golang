@@ -8,7 +8,8 @@ statement:
 	assignment ';'
 	| functionCall ';'
 	| ifStatement
-	| forStatement;
+	| forStatement
+	| whileStatement;
 
 assignment: Identifier '=' expression;
 
@@ -16,6 +17,8 @@ functionDecl: Def Identifier '(' idList? ')' block End;
 
 forStatement:
 	For Identifier '=' expression To expression Do block End;
+
+whileStatement: While expression Do block End;
 
 functionCall:
 	Identifier '(' exprList? ')' # identifierFunctionCall
@@ -35,8 +38,8 @@ idList: Identifier ( ',' Identifier)*;
 exprList: expression ( ',' expression)*;
 
 expression:
-	// '-' expression											# unaryMinusExpression
-	<assoc = right> expression '^' expression				# powerExpression
+	'-' expression											# unaryMinusExpression
+	| <assoc = right> expression '^' expression				# powerExpression
 	| expression op = ('*' | '/' | '%') expression			# multExpression
 	| expression op = ('+' | '-') expression				# addExpression
 	| expression op = ('>=' | '<=' | '>' | '<') expression	# compExpression
@@ -54,6 +57,7 @@ Else: 'else';
 Do: 'do';
 Return: 'return';
 For: 'for';
+While: 'while';
 To: 'to';
 End: 'end';
 

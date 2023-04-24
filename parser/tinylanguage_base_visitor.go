@@ -32,6 +32,10 @@ func (v *BaseTinyLanguageVisitor) VisitForStatement(ctx *ForStatementContext) in
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTinyLanguageVisitor) VisitWhileStatement(ctx *WhileStatementContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTinyLanguageVisitor) VisitIdentifierFunctionCall(ctx *IdentifierFunctionCallContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -61,6 +65,10 @@ func (v *BaseTinyLanguageVisitor) VisitIdList(ctx *IdListContext) interface{} {
 }
 
 func (v *BaseTinyLanguageVisitor) VisitExprList(ctx *ExprListContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitUnaryMinusExpression(ctx *UnaryMinusExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

@@ -26,6 +26,9 @@ type TinyLanguageVisitor interface {
 	// Visit a parse tree produced by TinyLanguageParser#forStatement.
 	VisitForStatement(ctx *ForStatementContext) interface{}
 
+	// Visit a parse tree produced by TinyLanguageParser#whileStatement.
+	VisitWhileStatement(ctx *WhileStatementContext) interface{}
+
 	// Visit a parse tree produced by TinyLanguageParser#identifierFunctionCall.
 	VisitIdentifierFunctionCall(ctx *IdentifierFunctionCallContext) interface{}
 
@@ -49,6 +52,9 @@ type TinyLanguageVisitor interface {
 
 	// Visit a parse tree produced by TinyLanguageParser#exprList.
 	VisitExprList(ctx *ExprListContext) interface{}
+
+	// Visit a parse tree produced by TinyLanguageParser#unaryMinusExpression.
+	VisitUnaryMinusExpression(ctx *UnaryMinusExpressionContext) interface{}
 
 	// Visit a parse tree produced by TinyLanguageParser#powerExpression.
 	VisitPowerExpression(ctx *PowerExpressionContext) interface{}

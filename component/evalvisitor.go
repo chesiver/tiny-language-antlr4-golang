@@ -79,6 +79,18 @@ func (e *EvalVisitor) VisitForStatement(ctx *parser.ForStatementContext) interfa
 	return VOID
 }
 
+func (e *EvalVisitor) VisitWhileStatement(ctx *parser.WhileStatementContext) interface{} {
+	fmt.Printf("Enter - While Statement\n")
+	fmt.Printf("!!!!!!!! %v\n", e.Visit(ctx.Expression()).(*TLValue).value)
+	for e.Visit(ctx.Expression()).(*TLValue).asBool() {
+		r := e.Visit(ctx.Block())
+		if r != VOID {
+			return r
+		}
+	}
+	return VOID
+}
+
 func (e *EvalVisitor) VisitIfStatement(ctx *parser.IfStatementContext) interface{} {
 	fmt.Printf("Enter IfStatement\n")
 	if e.Visit(ctx.IfStat().(*parser.IfStatContext).Expression()).(*TLValue).asBool() {
@@ -153,8 +165,20 @@ func (e *EvalVisitor) VisitExpressionExpression(ctx *parser.ExpressionExpression
 	return val.(*TLValue)
 }
 
+func (e *EvalVisitor) VisitUnaryMinusExpression(ctx *parser.UnaryMinusExpressionContext) interface{} {
+	val := e.Visit(ctx.Expression()).(*TLValue)
+	if val.isInt() {
+		return &TLValue{value: -val.asInt()}
+	}
+	if val.isDouble() {
+		return &TLValue{value: -val.asDouble()}
+	}
+	return NULL
+}
+
 func (e *EvalVisitor) lt(left *TLValue, right *TLValue) interface{} {
-	if left.isDouble() && right.isDouble() {
+	fmt.Printf("!!!!!! in lt %v %v\n", left, right)
+	if left.isNumber() && right.isNumber() {
 		return &TLValue{left.asDouble() < right.asDouble()}
 	}
 	if left.isString() && right.isString() {
