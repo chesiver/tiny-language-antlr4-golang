@@ -98,6 +98,9 @@ type TinyLanguageVisitor interface {
 	// Visit a parse tree produced by TinyLanguageParser#listExpression.
 	VisitListExpression(ctx *ListExpressionContext) interface{}
 
+	// Visit a parse tree produced by TinyLanguageParser#ternaryExpression.
+	VisitTernaryExpression(ctx *TernaryExpressionContext) interface{}
+
 	// Visit a parse tree produced by TinyLanguageParser#list.
 	VisitList(ctx *ListContext) interface{}
 

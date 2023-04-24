@@ -128,6 +128,10 @@ func (v *BaseTinyLanguageVisitor) VisitListExpression(ctx *ListExpressionContext
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTinyLanguageVisitor) VisitTernaryExpression(ctx *TernaryExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTinyLanguageVisitor) VisitList(ctx *ListContext) interface{} {
 	return v.VisitChildren(ctx)
 }

@@ -46,6 +46,7 @@ expression:
 	| expression op = ('==' | '!=') expression				# eqExpression
 	| expression '&&' expression							# andExpression
 	| expression '||' expression							# orExpression
+	| expression '?' expression ':' expression				# ternaryExpression
 	| Number												# numberExpression
 	| Bool													# boolExpression
 	| functionCall											# functionCallExpression

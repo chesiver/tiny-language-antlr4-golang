@@ -11,7 +11,7 @@ import (
 
 func main() {
 	// contents, _ := os.ReadFile("./test.tl")
-	contents, _ := os.ReadFile("./tl/list.tl")
+	contents, _ := os.ReadFile("./tl/basic.tl")
 	// fmt.Printf("!!!!: %v\n", string(contents))
 	inputStream := antlr.NewInputStream(string(contents))
 	lexer := parser.NewTinyLanguageLexer(inputStream)

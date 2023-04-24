@@ -299,6 +299,15 @@ func (e *EvalVisitor) VisitOrExpression(ctx *parser.OrExpressionContext) interfa
 	return &TLValue{left.asBool() || right.asBool()}
 }
 
+func (e *EvalVisitor) VisitTernaryExpression(ctx *parser.TernaryExpressionContext) interface{} {
+	condition := e.Visit(ctx.Expression(0)).(*TLValue)
+	if condition.asBool() {
+		return e.Visit(ctx.Expression(1)).(*TLValue)
+	} else {
+		return e.Visit(ctx.Expression(2)).(*TLValue)
+	}
+}
+
 func (e *EvalVisitor) VisitCompExpression(ctx *parser.CompExpressionContext) interface{} {
 	left := e.Visit(ctx.Expression(0)).(*TLValue)
 	right := e.Visit(ctx.Expression(1)).(*TLValue)
