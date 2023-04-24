@@ -100,6 +100,10 @@ func (v *BaseTinyLanguageVisitor) VisitAndExpression(ctx *AndExpressionContext) 
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTinyLanguageVisitor) VisitInExpression(ctx *InExpressionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTinyLanguageVisitor) VisitStringExpression(ctx *StringExpressionContext) interface{} {
 	return v.VisitChildren(ctx)
 }

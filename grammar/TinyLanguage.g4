@@ -47,6 +47,7 @@ expression:
 	| expression '&&' expression							# andExpression
 	| expression '||' expression							# orExpression
 	| expression '?' expression ':' expression				# ternaryExpression
+	| expression In expression								# inExpression
 	| Number												# numberExpression
 	| Bool													# boolExpression
 	| functionCall											# functionCallExpression
@@ -68,6 +69,7 @@ For: 'for';
 While: 'while';
 To: 'to';
 End: 'end';
+In: 'in';
 
 Bool: 'true' | 'false';
 

@@ -308,6 +308,20 @@ func (e *EvalVisitor) VisitTernaryExpression(ctx *parser.TernaryExpressionContex
 	}
 }
 
+func (e *EvalVisitor) VisitInExpression(ctx *parser.InExpressionContext) interface{} {
+	lhs := e.Visit(ctx.Expression(0)).(*TLValue)
+	rhs := e.Visit(ctx.Expression(1)).(*TLValue)
+	if rhs.isList() {
+		for _, c := range rhs.asList() {
+			if c.equals(lhs) {
+				return &TLValue{true}
+			}
+		}
+		return &TLValue{false}
+	}
+	return INVALID
+}
+
 func (e *EvalVisitor) VisitCompExpression(ctx *parser.CompExpressionContext) interface{} {
 	left := e.Visit(ctx.Expression(0)).(*TLValue)
 	right := e.Visit(ctx.Expression(1)).(*TLValue)

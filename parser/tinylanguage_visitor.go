@@ -77,6 +77,9 @@ type TinyLanguageVisitor interface {
 	// Visit a parse tree produced by TinyLanguageParser#andExpression.
 	VisitAndExpression(ctx *AndExpressionContext) interface{}
 
+	// Visit a parse tree produced by TinyLanguageParser#inExpression.
+	VisitInExpression(ctx *InExpressionContext) interface{}
+
 	// Visit a parse tree produced by TinyLanguageParser#stringExpression.
 	VisitStringExpression(ctx *StringExpressionContext) interface{}
 
