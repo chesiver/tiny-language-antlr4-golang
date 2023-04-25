@@ -44,6 +44,14 @@ func (v *BaseTinyLanguageVisitor) VisitPrintlnFunctionCall(ctx *PrintlnFunctionC
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTinyLanguageVisitor) VisitAssertFunctionCall(ctx *AssertFunctionCallContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTinyLanguageVisitor) VisitSizeFunctionCall(ctx *SizeFunctionCallContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTinyLanguageVisitor) VisitIfStatement(ctx *IfStatementContext) interface{} {
 	return v.VisitChildren(ctx)
 }

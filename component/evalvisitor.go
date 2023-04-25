@@ -185,6 +185,27 @@ func (e *EvalVisitor) VisitPrintlnFunctionCall(ctx *parser.PrintlnFunctionCallCo
 	return VOID
 }
 
+func (e *EvalVisitor) VisitAssertFunctionCall(ctx *parser.AssertFunctionCallContext) interface{} {
+	fmt.Printf("Enter Visit Assert Function\n")
+	val := e.Visit(ctx.Expression()).(*TLValue)
+	if !val.isBool() || !val.asBool() {
+		return INVALID
+	}
+	return VOID
+}
+
+func (e *EvalVisitor) VisitSizeFunctionCall(ctx *parser.SizeFunctionCallContext) interface{} {
+	fmt.Printf("Enter Visit Size Function\n")
+	val := e.Visit(ctx.Expression()).(*TLValue)
+	if val.isString() {
+		return &TLValue{len(val.asString())}
+	}
+	if val.isList() {
+		return &TLValue{len(val.asList())}
+	}
+	return INVALID
+}
+
 func (e *EvalVisitor) VisitExpressionExpression(ctx *parser.ExpressionExpressionContext) interface{} {
 	fmt.Printf("Enter - Expression Expression\n")
 	val := e.Visit(ctx.Expression())

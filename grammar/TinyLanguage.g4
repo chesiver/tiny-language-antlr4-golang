@@ -23,7 +23,9 @@ whileStatement: While expression Do block End;
 functionCall:
 	Identifier '(' exprList? ')' # identifierFunctionCall
 	// built-in
-	| Println '(' expression? ')' # printlnFunctionCall;
+	| Println '(' expression? ')'	# printlnFunctionCall
+	| Assert '(' expression ')'		# assertFunctionCall
+	| Size '(' expression ')'		# sizeFunctionCall;
 
 ifStatement: ifStat elseIfStat* elseStat? End;
 
@@ -59,7 +61,10 @@ expression:
 list: '[' exprList? ']';
 
 indexes: ( '[' expression ']')+;
+
 Println: 'println';
+Assert: 'assert';
+Size: 'size';
 Def: 'def';
 If: 'if';
 Else: 'else';
