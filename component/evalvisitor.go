@@ -8,7 +8,7 @@ import (
 	"strings"
 	"tiny-language-antlr4-llvm-ir/parser"
 
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
 type EvalVisitor struct {

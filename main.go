@@ -1,4 +1,4 @@
-//go:generate java -jar ./grammar/antlr-4.8-complete.jar -Xexact-output-dir -o parser -visitor -no-listener -Dlanguage=Go ./grammar/TinyLanguage.g4
+//go:generate java -jar ./grammar/antlr-4.12.0-complete.jar -Xexact-output-dir -o parser -visitor -no-listener -Dlanguage=Go ./grammar/TinyLanguage.g4
 package main
 
 import (
@@ -6,7 +6,7 @@ import (
 	"tiny-language-antlr4-llvm-ir/component"
 	"tiny-language-antlr4-llvm-ir/parser"
 
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
 func main() {

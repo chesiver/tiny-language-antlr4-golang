@@ -1,8 +1,8 @@
-// Code generated from ./grammar/TinyLanguage.g4 by ANTLR 4.8. DO NOT EDIT.
+// Code generated from ./grammar/TinyLanguage.g4 by ANTLR 4.12.0. DO NOT EDIT.
 
 package parser // TinyLanguage
 
-import "github.com/antlr/antlr4/runtime/Go/antlr"
+import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
 
 type BaseTinyLanguageVisitor struct {
 	*antlr.BaseParseTreeVisitor
